@@ -2,9 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using gerenciamento_alunos_api.Data;
 using gerenciamento_alunos_api.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gerenciamento_alunos_api.Controllers;
-
+[Authorize] 
 [ApiController]
 [Route("api/[controller]")]
 public class AlunosController : ControllerBase
@@ -55,7 +56,7 @@ public class AlunosController : ControllerBase
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!AlunoExists(id))
+            if (!_db.Alunos.Any(e => e.Id == id))
             {
                 return NotFound();
             }
