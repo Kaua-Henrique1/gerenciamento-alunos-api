@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<EscolaDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EscolaDB")));
 
-var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtKey = builder.Configuration["Jwt:Key"] ?? string.Empty;
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -32,6 +32,8 @@ builder.Services
             )
         };
     });
+
+builder.Services.AddAuthorization();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

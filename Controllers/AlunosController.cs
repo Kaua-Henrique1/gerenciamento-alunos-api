@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using gerenciamento_alunos_api.Data;
@@ -6,6 +7,7 @@ using gerenciamento_alunos_api.Models;
 namespace gerenciamento_alunos_api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class AlunosController : ControllerBase
 {
@@ -17,7 +19,7 @@ public class AlunosController : ControllerBase
     public async Task<ActionResult<IEnumerable<Aluno>>> Get() =>
         await _db.Alunos.ToListAsync();
 
-    [HttpGet("/alunos/{id}")]
+    [HttpGet("{id}")]
     public async Task<ActionResult<Aluno>> Get(int id)
     {
         var aluno = await _db.Alunos.FindAsync(id);
